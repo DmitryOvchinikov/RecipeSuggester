@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "558894056470",
+    "firebase_url": "https://recipesuggester-55d27.firebaseio.com",
+    "project_id": "recipesuggester-55d27",
+    "storage_bucket": "recipesuggester-55d27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558894056470:android:629685ef96acf56e9da137",
+        "android_client_info": {
+          "package_name": "com.android.recipesuggester"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558894056470-4cgremnovleqa2h3ii1i23kc3ub3526v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBamQuVjv7tHL8RoUBQzwpEjL0M6EHfnXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558894056470-4cgremnovleqa2h3ii1i23kc3ub3526v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
