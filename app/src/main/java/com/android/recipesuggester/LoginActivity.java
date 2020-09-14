@@ -22,7 +22,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 //TODO: Confirmation email when registering
-//TODO: title above icon or something similar
 //TODO: EditText borders possibly
 
 public class LoginActivity extends AppCompatActivity {

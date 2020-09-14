@@ -12,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.miguelcatalan.materialsearchview.SearchAdapter;
 import com.opencsv.CSVReader;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,14 +34,25 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 //TODO: do something with delay when application is opening without login
+//TODO: recycler-view beneath the search bar with all the user's ingredients, contains ingredient name and picture
+//TODO: create a user for the current email, save ingredients data there, fetch them if user already exists in database
+//TODO: check Snackbar onPause / onStop cancellation
+//TODO: possibly amount of ingredient above MaterialSearchBar
+//TODO: possibly jumps to different activities at the bottom of the screen
 
 public class MainActivity extends AppCompatActivity {
+
+    private final static String FIND_BY_INGREDIENTS_GET = "https://api.spoonacular.com/recipes/findByIngredients";
+    private final static String API_KEY = "?apiKey=b96fab6f87344498951e71b2f99b03be";
+    private final static String INGREDIENTS_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_100x100/";
 
     private MaterialSearchView main_BAR_search;
     private Toolbar main_BAR_toolbar;
     private String[] ingredients;
 
     private FirebaseUser user;
+    private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         initMaterialSearchBar();
 
-        //String url = "";
-        //String type = "";
-        //requestHTTP(url, type);
+
+        //requestHTTP(FIND_BY_INGREDIENTS_GET, "application/json");
     }
 
     private void initMaterialSearchBar() {
@@ -69,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         main_BAR_search.setVoiceSearch(false);
         main_BAR_search.setEllipsize(true);
         main_BAR_search.setSuggestions(ingredients);
-        //main_BAR_search.setAdapter( new SearchAdapter(this, ingredients));
+        //main_BAR_search.setAdapter(new SearchAdapter(this, ingredients));
 
         main_BAR_search.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -102,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 main_BAR_search.dismissSuggestions();
                 main_BAR_search.closeSearch();
-                Log.d("oof", "" + adapterView.getItemAtPosition(i).toString());
+                Snackbar.make(view, "Added " + adapterView.getItemAtPosition(i).toString() + " to your ingredients list.", Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -122,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
             ingredients[i] = ingredients[i].replace("[", "");
             ingredients[i] = ingredients[i].replace("]", "");
         }
-        Log.d("oof", "" + Arrays.toString(ingredients));
     }
 
     private void requestHTTP(String url, String type) {
@@ -135,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 Log.d("oof", "onResponse: Request successful");
                 Log.d("oof", "CALL: " + call);
-                Log.d("oof", "RESPONSE: " + response);
+                Log.d("oof", "RESPONSE: " + response.body().string());
             }
 
             @Override
@@ -143,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("oof", "onFailure: Request failed:" + e.getMessage());
             }
         });
+
     }
 
     private void findViews() {
