@@ -21,6 +21,15 @@
         android:scaleType="fitXY"
         />
 
+    <ProgressBar
+        android:id="@+id/register_BAR_progress"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/register_BTN_loginscreen"
+        android:visibility="invisible"
+        />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -96,12 +105,4 @@
         android:textSize="15sp"
         android:layout_alignParentBottom="true"
         />
-
-    <ProgressBar
-        android:id="@+id/register_BAR_progress"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone" />
 </RelativeLayout>

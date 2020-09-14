@@ -35,9 +35,6 @@ public class ResetPasswordDialog extends Dialog {
 
         findViews();
         bindButtonListeners();
-
-
-
     }
 
     private void bindButtonListeners() {
