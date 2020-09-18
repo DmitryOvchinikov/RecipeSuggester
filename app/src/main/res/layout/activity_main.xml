@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_BAR_container"
+        android:orientation="vertical"
+        />
+
     <FrameLayout
         android:id="@+id/main_BAR_container"
         android:layout_width="match_parent"
@@ -17,11 +26,13 @@
             app:titleTextColor="@color/white"
             />
 
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
+        <com.android.recipesuggester.SearchBar
             android:id="@+id/main_BAR_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             />
     </FrameLayout>
+
+
 
 </RelativeLayout>
