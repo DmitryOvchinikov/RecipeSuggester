@@ -54,4 +54,7 @@ dependencies {
     //OpenCSV
     implementation 'com.opencsv:opencsv:4.6'
 
+    //LOTTIE
+    implementation "com.airbnb.android:lottie:3.4.2"
+
 }

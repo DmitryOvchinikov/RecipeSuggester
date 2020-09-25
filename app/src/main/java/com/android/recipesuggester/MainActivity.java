@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -50,22 +51,23 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-//TODO: do something with delay when application is opening without login
 //TODO: possibly amount of ingredients above MaterialSearchBar
 //TODO: possibly jumps to different activities at the bottom of the screen
 //TODO: Loading screen to let the RecyclerView to load fully
-//TODO: handle duplication of an item in the ingredient list
+//TODO: find out how the two-three words ingredients are being sent to the server
+//TODO: fix clipping of image with a long text in the ingredients list
 
 public class MainActivity extends AppCompatActivity {
 
     private final static String FIND_BY_INGREDIENTS_GET = "https://api.spoonacular.com/recipes/findByIngredients";
-    private final static String API_KEY = "?apiKey=b96fab6f87344498951e71b2f99b03be";
+    private final static String API_KEY = "?apiKey=841a45035b8f4ada971513a952601c6b";
 
     private ImageView main_IMG_botBG;
 
     private SearchBar main_BAR_search;
     private Toolbar main_BAR_toolbar;
-    private RecyclerView main_recycler;
+    private MyRecyclerView main_recycler;
+    private Button main_BTN_findRecipe;
 
     private String[] ingredients;
     private FirebaseUser firebaseUser;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViews();
         glideIMGs();
+        bindButtonListeners();
         ingredientsAdapter = new IngredientsAdapter(null);
 
         try {
@@ -95,8 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallBack);
         itemTouchHelper.attachToRecyclerView(main_recycler);
+    }
 
-        //requestHTTP(FIND_BY_INGREDIENTS_GET, "application/json");
+    private void bindButtonListeners() {
+        main_BTN_findRecipe.setOnClickListener(findRecipeListener);
     }
 
     private void initIngredientList(User user1) {
@@ -191,10 +196,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 main_BAR_search.dismissSuggestions();
                 main_BAR_search.closeSearch();
-                user.addIngredient(adapterView.getItemAtPosition(i).toString());
-                ingredientsAdapter.updateIngredients(user.getIngredients());
-                saveUserToDB();
-                Snackbar.make(view, "Added " + adapterView.getItemAtPosition(i).toString() + " to your ingredients list.", Snackbar.LENGTH_LONG).show();
+                if (user.addIngredient(adapterView.getItemAtPosition(i).toString())) {
+                    ingredientsAdapter.updateIngredients(user.getIngredients());
+                    saveUserToDB();
+                    Snackbar.make(view, "Added " + adapterView.getItemAtPosition(i).toString() + " to your ingredients list.", Snackbar.LENGTH_LONG).show();
+                } else {
+                    Snackbar.make(view, adapterView.getItemAtPosition(i).toString() + " already exists in your ingredients list!", Snackbar.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -242,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
         main_BAR_toolbar = findViewById(R.id.main_BAR_toolbar);
         //main_IMG_botBG = findViewById(R.id.main_IMG_botBG);
         main_recycler = findViewById(R.id.main_recycler);
+        main_BTN_findRecipe = findViewById(R.id.main_BTN_findRecipe);
 
         setSupportActionBar(main_BAR_toolbar);
     }
@@ -250,6 +259,14 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.child(firebaseUser.getUid()).setValue(user);
         Log.d("oof", "Updating user information at the Realtime Database!");
     }
+
+    private View.OnClickListener findRecipeListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d("oof", FIND_BY_INGREDIENTS_GET + API_KEY  + user.getIngredientsString() + "&number=2");
+            requestHTTP(FIND_BY_INGREDIENTS_GET + API_KEY + user.getIngredientsString() + "&number=2","application/json");
+        }
+    };
 
     private ItemTouchHelper.SimpleCallback itemTouchCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
@@ -267,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Snackbar.make(MainActivity.this.main_IMG_botBG, "Removed " + user.getIngredients().get(position) + " from your ingredients list.", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(viewHolder.itemView, "Removed " + user.getIngredients().get(position) + " from your ingredients list.", Snackbar.LENGTH_LONG).show();
                     ingredientsAdapter.notifyItemRemoved(position);
                     user.getIngredients().remove(position);
                     ingredientsAdapter.updateIngredients(user.getIngredients());
@@ -291,13 +308,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_ingredients, menu);
         MenuItem item = menu.findItem(R.id.menu_search);
-        //main_BAR_search.getLayoutParams().height = ActionBar.LayoutParams.MATCH_PARENT;
         main_BAR_search.setMenuItem(item);
 
         return true;
     }
-
-
 
     @Override
     public void onBackPressed() {

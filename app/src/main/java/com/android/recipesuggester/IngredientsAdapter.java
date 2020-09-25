@@ -74,8 +74,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.IngredientsViewHolder holder, int position) {
         if (getItemViewType(position) == VIEW_TYPE_EMPTY_LIST_PLACEHOLDER) {
+            //nothing
         } else {
             holder.ingredient_LBL_text.setText(ingredients.get(position));
+            Log.d("oof", INGREDIENTS_IMAGE_URL + ingredients.get(position).replaceAll(" ", "-") + ".jpg");
+            Glide.with(holder.itemView).load(INGREDIENTS_IMAGE_URL + ingredients.get(position) + ".jpg").into(holder.ingredient_IMG_img);
         }
     }
 
@@ -92,7 +95,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
     }
 
-    public static class IngredientsViewHolder extends RecyclerView.ViewHolder {
+    public class IngredientsViewHolder extends RecyclerView.ViewHolder {
 
         private TextView ingredient_LBL_text;
         private ImageView ingredient_IMG_img;
@@ -100,18 +103,16 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public IngredientsViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            Context context = itemView.getContext();
-            ((MainActivity)context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ingredient_LBL_text = itemView.findViewById(R.id.ingredient_LBL_text);
-                    ingredient_IMG_img = itemView.findViewById(R.id.ingredient_IMG_img);
-
-                    //Log.d("oof", INGREDIENTS_IMAGE_URL +  + ".jpg");
-                    //Glide.with(itemView).load(INGREDIENTS_IMAGE_URL + ingredient_LBL_text.getText() + ".jpg").into(ingredient_IMG_img);
-                }
-            });
-
+            if (ingredients.size() != 0 ) {
+                final Context context = itemView.getContext();
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ingredient_LBL_text = itemView.findViewById(R.id.ingredient_LBL_text);
+                        ingredient_IMG_img = itemView.findViewById(R.id.ingredient_IMG_img);
+                    }
+                });
+            }
         }
     }
 }

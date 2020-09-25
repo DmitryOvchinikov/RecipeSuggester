@@ -14,8 +14,8 @@
         android:layout_marginStart="10dp"
         android:textSize="24sp"
         android:textColor="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:maxLines="1"
         />
 
     <ImageView

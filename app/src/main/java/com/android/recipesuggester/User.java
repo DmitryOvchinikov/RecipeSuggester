@@ -33,9 +33,9 @@ public class User {
 
     //Getting a string for the http request
     public String getIngredientsString() {
-        String str = "&";
+        String str = "&ingredients=";
         for (int i = 0; i < ingredients.size(); i++) {
-            str = str.concat(ingredients.get(i));
+            str = str.concat(ingredients.get(i).replaceAll(" ", "-"));
             if ( i != ingredients.size() - 1) {
                 str = str.concat(",+");
             }
@@ -47,8 +47,13 @@ public class User {
         this.ingredientsString = ingredientsString;
     }
 
-    public void addIngredient(String ingredient) {
-        this.ingredients.add(ingredient);
+    public boolean addIngredient(String ingredient) {
+        if (this.ingredients.contains(ingredient)) {
+            return false;
+        } else {
+            this.ingredients.add(ingredient);
+        }
+        return true;
     }
 
 }

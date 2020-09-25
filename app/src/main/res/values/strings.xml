@@ -37,4 +37,5 @@
     <string name="searchbar_title">Add Ingredients</string>
     <string name="my_search">My Search</string>
     <string name="no_items">No items</string>
+    <string name="find_recipe">Find recipe</string>
 </resources>
