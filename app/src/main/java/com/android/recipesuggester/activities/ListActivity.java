@@ -1,10 +1,8 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.activities;
 
-import android.app.ActionBar;
-import android.content.ClipData;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,27 +22,22 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.android.recipesuggester.adapters.IngredientsAdapter;
+import com.android.recipesuggester.custom.MyRecyclerView;
+import com.android.recipesuggester.R;
+import com.android.recipesuggester.custom.MySearchBar;
+import com.android.recipesuggester.data.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.opencsv.CSVReader;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -56,18 +50,19 @@ import okhttp3.Response;
 //TODO: Loading screen to let the RecyclerView to load fully
 //TODO: find out how the two-three words ingredients are being sent to the server
 //TODO: fix clipping of image with a long text in the ingredients list
+//TODO: ask for name in the register screen
 
-public class MainActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
     private final static String FIND_BY_INGREDIENTS_GET = "https://api.spoonacular.com/recipes/findByIngredients";
-    private final static String API_KEY = "?apiKey=841a45035b8f4ada971513a952601c6b";
+    private final static String API_KEY = "";
 
-    private ImageView main_IMG_botBG;
+    private ImageView list_IMG_botBG;
 
-    private SearchBar main_BAR_search;
-    private Toolbar main_BAR_toolbar;
-    private MyRecyclerView main_recycler;
-    private Button main_BTN_findRecipe;
+    private MySearchBar list_BAR_search;
+    private Toolbar list_BAR_toolbar;
+    private MyRecyclerView list_recycler;
+    private TextView list_LBL_counter;
 
     private String[] ingredients;
     private FirebaseUser firebaseUser;
@@ -79,39 +74,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list);
+
+        ingredients = getIntent().getStringArrayExtra("ingredients");
 
         findViews();
         glideIMGs();
-        bindButtonListeners();
         ingredientsAdapter = new IngredientsAdapter(null);
-
-        try {
-            readIngredients();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         initMaterialSearchBar();
         initDB();
-        initUser();
+        loadUser();
+        initIngredientList();
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallBack);
-        itemTouchHelper.attachToRecyclerView(main_recycler);
+        itemTouchHelper.attachToRecyclerView(list_recycler);
     }
 
-    private void bindButtonListeners() {
-        main_BTN_findRecipe.setOnClickListener(findRecipeListener);
-    }
-
-    private void initIngredientList(User user1) {
+    private void initIngredientList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        main_recycler.setLayoutManager(linearLayoutManager);
-        main_recycler.setHasFixedSize(true);
-        main_recycler.setAdapter(ingredientsAdapter);
-        ingredientsAdapter.updateIngredients(user1.getIngredients());
-        main_recycler.smoothScrollToPosition(0);
-        Log.d("oof", "INGREDIENTS: " + user1.getIngredients());
+        list_recycler.setLayoutManager(linearLayoutManager);
+        list_recycler.setHasFixedSize(true);
+        list_recycler.setAdapter(ingredientsAdapter);
+        ingredientsAdapter.updateIngredients(user.getIngredients());
+        list_recycler.smoothScrollToPosition(0);
+        Log.d("oof", "INGREDIENTS: " + user.getIngredients());
+
+        updateIngredientCounter();
+
+    }
+
+    private void updateIngredientCounter() {
+        list_LBL_counter.setText("You have " + user.getIngredients().size() + " ingredients!");
     }
 
     private void initDB() {
@@ -119,40 +113,11 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
     }
 
-    private void initUser() {
-        user = new User();
-
-        MainActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                databaseReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getValue() != null) {
-                            user = snapshot.getValue(User.class);
-                            if (user.getIngredients() == null) {
-                                user.setIngredients(new ArrayList<String>());
-                            }
-                            Log.d("oof", "User loaded successfully from the database!");
-                        } else {
-                            user.setEmail(firebaseUser.getEmail());
-                            user.setIngredients(new ArrayList<String>());
-                            user.setIngredientsString("");
-                            saveUserToDB();
-                            Log.d("oof", "User created successfully!");
-                        }
-
-                        initIngredientList(user);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.d("oof", "Database read cancelled while fetching a user!");
-                    }
-                });
-            }
-        });
+    private void loadUser() {
+        Gson gson = new Gson();
+        String userString = "";
+        userString = getIntent().getStringExtra("user");
+        user = gson.fromJson(userString, User.class);
     }
 
     private void glideIMGs() {
@@ -161,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initMaterialSearchBar() {
 
-        main_BAR_search.setVoiceSearch(false);
-        main_BAR_search.setEllipsize(true);
-        main_BAR_search.setSuggestions(ingredients);
+        list_BAR_search.setVoiceSearch(false);
+        list_BAR_search.setEllipsize(true);
+        list_BAR_search.setSuggestions(ingredients);
 
-        main_BAR_search.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+        list_BAR_search.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d("oof","onQueryTextSubmit");
@@ -178,11 +143,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        main_BAR_search.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+        list_BAR_search.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
                 Log.d("oof","onSearchViewShown");
-
             }
 
             @Override
@@ -191,37 +155,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        main_BAR_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list_BAR_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                main_BAR_search.dismissSuggestions();
-                main_BAR_search.closeSearch();
+                list_BAR_search.dismissSuggestions();
+                list_BAR_search.closeSearch();
                 if (user.addIngredient(adapterView.getItemAtPosition(i).toString())) {
                     ingredientsAdapter.updateIngredients(user.getIngredients());
                     saveUserToDB();
                     Snackbar.make(view, "Added " + adapterView.getItemAtPosition(i).toString() + " to your ingredients list.", Snackbar.LENGTH_LONG).show();
+                    updateIngredientCounter();
                 } else {
                     Snackbar.make(view, adapterView.getItemAtPosition(i).toString() + " already exists in your ingredients list!", Snackbar.LENGTH_LONG).show();
                 }
             }
         });
-    }
-
-    private void readIngredients() throws IOException {
-            InputStream is = this.getResources().openRawResource(R.raw.ingredients);
-            InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-            List<String[]> ingredientList = new CSVReader(reader).readAll();
-            listToStringArray(ingredientList);
-    }
-
-    private void listToStringArray(List<String[]> ingredientList) {
-        ingredients = new String[ingredientList.size()];
-
-        for (int i = 0; i < ingredientList.size(); i++) {
-            ingredients[i] = Arrays.toString(ingredientList.get(i));
-            ingredients[i] = ingredients[i].replace("[", "");
-            ingredients[i] = ingredients[i].replace("]", "");
-        }
     }
 
     private void requestHTTP(String url, String type) {
@@ -246,13 +194,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        main_BAR_search = findViewById(R.id.main_BAR_search);
-        main_BAR_toolbar = findViewById(R.id.main_BAR_toolbar);
-        //main_IMG_botBG = findViewById(R.id.main_IMG_botBG);
-        main_recycler = findViewById(R.id.main_recycler);
-        main_BTN_findRecipe = findViewById(R.id.main_BTN_findRecipe);
+        list_BAR_search = findViewById(R.id.list_BAR_search);
+        list_BAR_toolbar = findViewById(R.id.list_BAR_toolbar);
+        //list_IMG_botBG = findViewById(R.id.list_IMG_botBG);
+        list_recycler = findViewById(R.id.list_recycler);
+        list_LBL_counter = findViewById(R.id.list_LBL_counter);
 
-        setSupportActionBar(main_BAR_toolbar);
+        setSupportActionBar(list_BAR_toolbar);
     }
 
     private void saveUserToDB() {
@@ -278,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition(); //Getting the position of the item swiped
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
             builder.setMessage("Are you sure you want to delete " + user.getIngredients().get(position) + " from the ingredients list?");
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -289,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                     user.getIngredients().remove(position);
                     ingredientsAdapter.updateIngredients(user.getIngredients());
                     saveUserToDB();
+                    updateIngredientCounter();
                 }
             }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 @Override
@@ -308,18 +257,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_ingredients, menu);
         MenuItem item = menu.findItem(R.id.menu_search);
-        main_BAR_search.setMenuItem(item);
+        list_BAR_search.setMenuItem(item);
 
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (main_BAR_search.isSearchOpen()) {
-            main_BAR_search.closeSearch();
+        if (list_BAR_search.isSearchOpen()) {
+            list_BAR_search.closeSearch();
         }
         else {
             super.onBackPressed();
+            startActivity(new Intent(ListActivity.this, MainActivity.class));
+            finish();
         }
     }
 
@@ -346,4 +297,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("oof", "onDestroy");
     }
+
 }

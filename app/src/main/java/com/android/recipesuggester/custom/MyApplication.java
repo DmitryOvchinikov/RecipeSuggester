@@ -1,4 +1,4 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.custom;
 
 
 import android.app.Application;

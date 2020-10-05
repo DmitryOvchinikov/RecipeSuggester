@@ -1,4 +1,4 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.data;
 
 import java.util.ArrayList;
 

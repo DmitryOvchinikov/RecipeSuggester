@@ -1,4 +1,4 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.recipesuggester.R;
+import com.android.recipesuggester.activities.ListActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -38,7 +40,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         if (ingredients == null) {
             ingredients = new ArrayList<String>();
         }
-        this.ingredients.addAll(newIngredients);
+        if (newIngredients != null) {
+            this.ingredients.addAll(newIngredients);
+        }
         this.notifyDataSetChanged();
     }
 
@@ -105,7 +109,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
             if (ingredients.size() != 0 ) {
                 final Context context = itemView.getContext();
-                ((MainActivity) context).runOnUiThread(new Runnable() {
+                ((ListActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ingredient_LBL_text = itemView.findViewById(R.id.ingredient_LBL_text);

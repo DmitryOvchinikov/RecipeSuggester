@@ -1,4 +1,4 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.custom;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -6,17 +6,17 @@ import android.util.AttributeSet;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-public class SearchBar extends MaterialSearchView {
+public class MySearchBar extends MaterialSearchView {
 
-    public SearchBar(Context context, AttributeSet attrs) {
+    public MySearchBar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SearchBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MySearchBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public SearchBar(Context context) {
+    public MySearchBar(Context context) {
         super(context);
     }
 

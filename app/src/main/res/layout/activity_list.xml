@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.android.recipesuggester.custom.MyRecyclerView
+        android:id="@+id/list_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_BAR_container"
+        android:orientation="vertical"
+        />
+
+    <FrameLayout
+        android:id="@+id/list_BAR_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/list_BAR_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:title="@string/searchbar_title"
+            app:titleTextColor="@color/white"
+            />
+
+
+        <com.android.recipesuggester.custom.MySearchBar
+            android:id="@+id/list_BAR_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/list_LBL_counter"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@id/list_BAR_container"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textAllCaps="true"
+        />
+
+
+
+</RelativeLayout>

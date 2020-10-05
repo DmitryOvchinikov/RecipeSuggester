@@ -1,9 +1,8 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.custom;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Size;
 import android.view.Display;
 import android.view.WindowManager;
 

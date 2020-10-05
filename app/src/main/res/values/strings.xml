@@ -12,7 +12,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
-    <string name="hint_name">Fullname</string>
+    <string name="hint_name">Full Name</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_link_to_register">Not a member? Get registered now!</string>
     <string name="btn_link_to_login">Already registered? Login!</string>
@@ -29,6 +29,7 @@
     <string name="error_wrong_email">Email does not exist!</string>
     <string name="enter_email">Enter your email address!</string>
     <string name="enter_password">Enter your password!</string>
+    <string name="enter_name">Please enter your name!</string>
     <string name="successful_registration">Registration done!</string>
     <string name="reset">Reset</string>
     <string name="reset_successful">We have sent you instructions to reset your password!</string>
@@ -37,5 +38,16 @@
     <string name="searchbar_title">Add Ingredients</string>
     <string name="my_search">My Search</string>
     <string name="no_items">No items</string>
-    <string name="find_recipe">Find recipe</string>
+    <string name="ingredients_list">Ingredients List</string>
+
+    <!-- ************************** MENUS ************************** -->
+
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="made_by">Made by Dmitry Ovchinikov</string>
+    <string name="search_recipe">Search Recipes</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+
 </resources>

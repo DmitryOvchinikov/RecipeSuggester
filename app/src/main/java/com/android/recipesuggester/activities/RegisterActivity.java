@@ -1,25 +1,30 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.recipesuggester.custom.MyToast;
+import com.android.recipesuggester.R;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+//TODO: add name to register
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -27,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView register_IMG_botBG;
     private ImageView register_IMG_logo;
 
-    private EditText register_EDT_email, register_EDT_password;
+    private EditText register_EDT_email, register_EDT_password, register_EDT_name;
     private Button register_BTN_register, register_BTN_loginscreen;
     private ProgressBar register_BAR_progress;
 
@@ -68,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         register_EDT_email = findViewById(R.id.register_EDT_email);
         register_EDT_password = findViewById(R.id.register_EDT_password);
+        register_EDT_name = findViewById(R.id.register_EDT_name);
 
         register_BTN_register = findViewById(R.id.register_BTN_register);
         register_BTN_loginscreen = findViewById(R.id.register_BTN_loginscreen);
@@ -88,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View view) {
             String email = register_EDT_email.getText().toString().trim();
             String password = register_EDT_password.getText().toString().trim();
+            String name = register_EDT_name.getText().toString().trim();
 
             if (TextUtils.isEmpty(email)) {
                 MyToast.getInstance().showToast(R.string.enter_email, getApplicationContext());
@@ -99,17 +106,21 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            if (TextUtils.isEmpty(name)) {
+                MyToast.getInstance().showToast(R.string.enter_name, getApplicationContext());
+            }
+
             if (password.length() < 6) {
                 MyToast.getInstance().showToast(R.string.minimum_password, getApplicationContext());
                 return;
             }
 
             register_BAR_progress.setVisibility(View.VISIBLE);
-            createUser(email, password);
+            createUser(email, password, name);
         }
     };
 
-    private void createUser(String email, String password) {
+    private void createUser(String email, String password, final String name) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -119,12 +130,22 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     MyToast.getInstance().showToast(R.string.auth_failed, getApplicationContext());
                 } else {
+                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                    auth.getCurrentUser().updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("oof", "User name added.");
+                            }
+                        }
+                    });
                     MyToast.getInstance().showToast(R.string.successful_registration, getApplicationContext());
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                 }
             }
         });
+
     }
 
     @Override

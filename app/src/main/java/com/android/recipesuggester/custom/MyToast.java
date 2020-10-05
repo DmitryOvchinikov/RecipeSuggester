@@ -1,7 +1,6 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.custom;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 public class MyToast {

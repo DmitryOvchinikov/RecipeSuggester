@@ -1,4 +1,4 @@
-package com.android.recipesuggester;
+package com.android.recipesuggester.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.android.recipesuggester.custom.MyToast;
+import com.android.recipesuggester.R;
+import com.android.recipesuggester.dialogs.ResetPasswordDialog;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-            if (auth.getCurrentUser() != null) {
+            if (auth.getCurrentUser() != null && getIntent().getIntExtra("logout", 1) != 0) {
                 startActivity(new Intent(LoginActivity.this, LoadingActivity.class));
                 finish();
         }

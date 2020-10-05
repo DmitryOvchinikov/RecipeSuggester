@@ -67,6 +67,24 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/register_EDT_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="@string/hint_name"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/bg_login" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
                 android:id="@+id/register_EDT_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,6 +95,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="@color/bg_login" />
+
 
         </com.google.android.material.textfield.TextInputLayout>
 
