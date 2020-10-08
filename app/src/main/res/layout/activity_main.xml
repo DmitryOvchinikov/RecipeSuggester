@@ -15,12 +15,6 @@
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/menu_drawer" >
 
-        <ImageView
-            android:id="@+id/main_IMG_navigationBG"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"/>
-
     </com.google.android.material.navigation.NavigationView>
 
     <RelativeLayout
@@ -30,17 +24,26 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_BAR_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="25dp"
             android:background="@color/colorPrimary"
-            android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:subtitleTextColor="@color/white"
-            app:titleTextColor="@color/white"
             />
 
+        <View
+            android:id="@+id/main_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_below="@id/main_BAR_toolbar"/>
+
+        <RelativeLayout
+            android:id="@+id/main_fragments_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/main_line"/>
+
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/main_BAR_fragments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -50,7 +53,7 @@
             app:cnb_badgeColor="@color/white"
             app:cnb_menuResource="@menu/menu_fragments"
             app:cnb_textColor="@color/white"
-            app:cnb_unselectedColor="@color/white"
+            app:cnb_unselectedColor="@android:color/black"
             app:cnb_iconSize="28dp"
             app:cnb_radius="8dp"
             />

@@ -23,14 +23,14 @@ public class MyRecyclerView extends RecyclerView {
         super(context, attrs, defStyleAttr);
     }
 
-    // Overriding the onMeasure method to force the recycler view maximum height
+    // Overriding the onMeasure method to force the recyclerview's maximum height
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        heightSpec = MeasureSpec.makeMeasureSpec((int) (size.y*0.8),MeasureSpec.AT_MOST);
+        heightSpec = MeasureSpec.makeMeasureSpec((int) (size.y*0.75),MeasureSpec.AT_MOST);
         super.onMeasure(widthSpec, heightSpec);
     }
 }

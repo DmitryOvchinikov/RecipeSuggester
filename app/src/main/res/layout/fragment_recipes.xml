@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RecipesFragment">
+
+    <ImageView
+        android:id="@+id/recipes_IMG_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/recipes_TXT_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recipes_IMG_recipe"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/recipes_TXT_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recipes_TXT_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:maxLength="10"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/recipes_TXT_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="?actionBarSize"
+
+        android:text="@string/search_recipe"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/recipes_BTN_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="150dp"
+        android:text="@string/recipes_back" />
+
+    <Button
+        android:id="@+id/recipes_BTN_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="150dp"
+        android:text="@string/recipes_next" />
+
+
+</RelativeLayout>

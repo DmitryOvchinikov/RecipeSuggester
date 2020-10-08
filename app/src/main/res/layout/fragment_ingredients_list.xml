@@ -23,7 +23,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:title="@string/searchbar_title"
-            app:titleTextColor="@color/white"
+            app:titleTextColor="@android:color/black"
             />
 
 
@@ -33,17 +33,5 @@
             android:layout_height="0dp"
             />
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/list_LBL_counter"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_below="@id/list_BAR_container"
-        android:textSize="22sp"
-        android:gravity="center"
-        android:textAllCaps="true"
-        />
-
-
 
 </RelativeLayout>

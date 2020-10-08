@@ -120,6 +120,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         intent.putExtra("user", gson.toJson(user));
         intent.putExtra("ingredients", ingredients);
+        intent.putExtra("user_name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         startActivity(intent);
         finish();
     }

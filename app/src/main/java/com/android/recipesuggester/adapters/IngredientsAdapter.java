@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.recipesuggester.R;
-import com.android.recipesuggester.activities.ListActivity;
+import com.android.recipesuggester.activities.MainActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -109,7 +109,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
             if (ingredients.size() != 0 ) {
                 final Context context = itemView.getContext();
-                ((ListActivity) context).runOnUiThread(new Runnable() {
+                ((MainActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ingredient_LBL_text = itemView.findViewById(R.id.ingredient_LBL_text);

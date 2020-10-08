@@ -21,23 +21,22 @@
         <ImageView
             android:id="@+id/menu_IMG_logo"
             android:layout_width="55dp"
-            android:layout_height="55dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/almendra_sc"
-            android:text="@string/app_name"
-            android:textSize="24sp"
-
-            android:textStyle="bold" />
+            android:layout_height="55dp"
+            />
 
         <TextView
             android:id="@+id/menu_LBL_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:alpha="0.7"
+            android:fontFamily="@font/almendra_sc"
+            android:textSize="24sp"
+
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/menu_LBL_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/almendra_sc"
             android:textSize="18sp"
             android:textStyle="bold" />

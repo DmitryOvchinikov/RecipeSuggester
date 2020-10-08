@@ -49,5 +49,9 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <!-- ************************** RECIPES FRAGMENT ************************** -->
+    <string name="recipes_back">Back</string>
+    <string name="recipes_next">Next</string>
+
 
 </resources>
