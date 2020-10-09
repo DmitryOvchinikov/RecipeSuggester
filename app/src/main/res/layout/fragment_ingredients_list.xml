@@ -26,12 +26,14 @@
             app:titleTextColor="@android:color/black"
             />
 
-
         <com.android.recipesuggester.custom.MySearchBar
             android:id="@+id/list_BAR_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             />
+
     </FrameLayout>
+
+
 
 </RelativeLayout>

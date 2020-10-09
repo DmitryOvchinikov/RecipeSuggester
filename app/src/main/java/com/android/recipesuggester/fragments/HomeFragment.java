@@ -60,8 +60,10 @@ public class HomeFragment extends Fragment {
 
     private void updateIngredientAmount() {
         MainActivity activity = (MainActivity) getActivity();
-        int amount = activity.getUser().getIngredients().size();
-        home_TXT_ingredients.setText("Amount of Ingredients: " + amount);
+        if (activity.getUser().getIngredients() != null) {
+            int amount = activity.getUser().getIngredients().size();
+            home_TXT_ingredients.setText("Amount of Ingredients: " + amount);
+        }
     }
 
     private void findViews(View view) {
