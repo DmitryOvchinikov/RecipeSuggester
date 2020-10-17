@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:title="@string/searchbar_title"
+            app:title="@string/search_bar_title"
             app:titleTextColor="@android:color/black"
             />
 

@@ -81,7 +81,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             //nothing
         } else {
             holder.ingredient_LBL_text.setText(ingredients.get(position));
-            Log.d("oof", INGREDIENTS_IMAGE_URL + ingredients.get(position).replaceAll(" ", "-") + ".jpg");
             Glide.with(holder.itemView).load(INGREDIENTS_IMAGE_URL + ingredients.get(position) + ".jpg").into(holder.ingredient_IMG_img);
         }
     }

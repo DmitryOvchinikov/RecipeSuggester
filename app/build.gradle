@@ -27,7 +27,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
@@ -40,8 +40,8 @@ dependencies {
 
     //FIREBASE
     implementation "com.google.firebase:firebase-auth:19.4.0"
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    implementation 'com.google.firebase:firebase-database:19.4.0'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-database:19.5.0'
 
     //MATERIAL
     implementation 'com.google.android.material:material:1.2.1'
@@ -63,4 +63,10 @@ dependencies {
 
     //CHIP NAVIGATION BAR
     implementation 'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.3.4'
+
+    //ExpandableLayout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
+    //EASYPERMISSIONS
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

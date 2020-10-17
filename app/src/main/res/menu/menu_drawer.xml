@@ -4,15 +4,43 @@
 
     <group android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/drawer_home"
-            android:icon="@drawable/home_icon"
-            android:title="@string/home" />
+        <item android:title="@string/drawer_general">
 
-        <item
-            android:id="@+id/drawer_logout"
-            android:icon="@drawable/logout_icon"
-            android:title="@string/logout" />
+            <menu>
+
+                <item
+                    android:id="@+id/drawer_back"
+                    android:checkable="false"
+                    android:checked="false"
+                    android:icon="@drawable/back_icon"
+                    android:title="@string/drawer_back"
+                    />
+
+            </menu>
+
+        </item>
+
+        <item android:title="@string/drawer_profile">
+
+            <menu>
+
+                <item
+                    android:id="@+id/drawer_picture"
+                    android:checkable="false"
+                    android:checked="false"
+                    android:icon="@drawable/picture_icon"
+                    android:title="@string/drawer_change_picture"
+                    />
+
+                <item
+                    android:id="@+id/drawer_logout"
+                    android:checkable="false"
+                    android:checked="false"
+                    android:icon="@drawable/logout_icon"
+                    android:title="@string/drawer_logout"
+                    />
+            </menu>
+        </item>
 
     </group>
 

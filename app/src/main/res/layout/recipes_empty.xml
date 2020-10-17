@@ -5,14 +5,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/ingredient_LBL_empty"
+        android:id="@+id/recipe_LBL_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textAllCaps="true"
         android:textSize="28sp"
         android:textColor="@color/colorPrimary"
-        android:text="@string/search_no_ingredients"
+        android:text="@string/recipes_no_recipes"
         android:alpha=".5"
         android:layout_centerHorizontal="true"
         android:maxLines="1"

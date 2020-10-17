@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment {
     //TXT
     private TextView home_TXT_hello;
     private TextView home_TXT_ingredients;
+    private TextView home_TXT_recipes;
 
     //IMGS
     private ImageView home_IMG_bg;
@@ -53,16 +54,21 @@ public class HomeFragment extends Fragment {
                 String name = getActivity().getIntent().getExtras().getString("user_name");
                 home_TXT_hello.setText("Hello " + name + "!");
 
-                updateIngredientAmount();
+                updateAmount();
             }
         });
     }
 
-    private void updateIngredientAmount() {
+    // Update the amount of ingredients and recipes on the screen
+    private void updateAmount() {
         MainActivity activity = (MainActivity) getActivity();
         if (activity.getUser().getIngredients() != null) {
             int amount = activity.getUser().getIngredients().size();
             home_TXT_ingredients.setText("Amount of Ingredients: " + amount);
+        }
+        if (activity.getUser().getRecipes() != null) {
+            int amount = activity.getUser().getRecipes().size();
+            home_TXT_recipes.setText("Amount of Recipes: " + amount);
         }
     }
 
@@ -70,6 +76,7 @@ public class HomeFragment extends Fragment {
         home_TXT_hello = view.findViewById(R.id.home_TXT_hello);
         home_IMG_bg = view.findViewById(R.id.home_IMG_bg);
         home_TXT_ingredients = view.findViewById(R.id.home_TXT_ingredients);
+        home_TXT_recipes = view.findViewById(R.id.home_TXT_recipes);
     }
 
     public void setOnSwitchFragmentListener(OnSwitchFragmentListener callback) {

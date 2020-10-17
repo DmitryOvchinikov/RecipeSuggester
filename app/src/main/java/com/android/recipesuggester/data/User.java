@@ -6,13 +6,15 @@ public class User {
     private String email;
     private ArrayList<String> ingredients;
     private String ingredientsString;
+    private ArrayList<Recipe> recipes;
 
     public User() {
     }
 
-    public User(String email, ArrayList<String> ingredients) {
+    public User(String email, ArrayList<String> ingredients, ArrayList<Recipe> recipes) {
         this.email = email;
         this.ingredients = ingredients;
+        this.recipes = recipes;
     }
 
     public String getEmail() {
@@ -37,10 +39,25 @@ public class User {
         for (int i = 0; i < ingredients.size(); i++) {
             str = str.concat(ingredients.get(i).replaceAll(" ", "-"));
             if ( i != ingredients.size() - 1) {
-                str = str.concat(",+");
+                str += ",+";
             }
         }
         return str;
+    }
+
+    public ArrayList<Recipe> getRecipes() {
+        if (recipes == null) {
+            recipes = new ArrayList<Recipe>();
+        }
+        return recipes;
+    }
+
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        this.recipes.add(recipe);
     }
 
     public void setIngredientsString(String ingredientsString) {

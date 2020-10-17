@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.recipesuggester.R;
+import com.android.recipesuggester.data.Recipe;
 import com.android.recipesuggester.data.User;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,15 +37,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO: make the loading wait 1 second after the things have been loaded
-
 public class LoadingActivity extends AppCompatActivity {
 
+    //ANIMATIONS
     private LottieAnimationView loading_ANIM_animation;
 
+    //IMGS
     private ImageView loading_IMG_logo;
+
+    //TXT
     private TextView loading_LBL_title;
 
+    //DATA
     private String[] ingredients;
     private User user;
 
@@ -65,20 +69,9 @@ public class LoadingActivity extends AppCompatActivity {
         }
 
         initUser();
-
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                continueToMain();
-            }
-        };
-
-        handler.postDelayed(runnable,3000);
-        handler.removeCallbacksAndMessages(runnable);
-
     }
 
+    // Initializing a User either by creating it or from the firebase auth.
     private void initUser() {
         user = new User();
 
@@ -101,13 +94,27 @@ public class LoadingActivity extends AppCompatActivity {
                             user.setEmail(firebaseUser.getEmail());
                             user.setIngredients(new ArrayList<String>());
                             user.setIngredientsString("");
+                            user.setRecipes(new ArrayList<Recipe>());
                             Log.d("oof", "User created successfully!");
                         }
+
+                        //Waiting for a second after the user is fetched
+                        Handler handler = new Handler();
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                continueToMain();
+                            }
+                        };
+
+                        handler.postDelayed(runnable, 1000);
+                        handler.removeCallbacksAndMessages(runnable);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Log.d("oof", "Database read cancelled while fetching a user!");
+                        continueToMain();
                     }
                 });
             }
@@ -125,6 +132,7 @@ public class LoadingActivity extends AppCompatActivity {
         finish();
     }
 
+    // Reading ingredients from a CSV file
     private void readIngredients() throws IOException {
         InputStream is = this.getResources().openRawResource(R.raw.ingredients);
         InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
@@ -132,6 +140,7 @@ public class LoadingActivity extends AppCompatActivity {
         listToStringArray(ingredientList);
     }
 
+    // Transforming a list to a string array
     private void listToStringArray(List<String[]> ingredientList) {
         ingredients = new String[ingredientList.size()];
 

@@ -30,7 +30,7 @@ public class ResetPasswordDialog extends Dialog {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resetpassword);
+        setContentView(R.layout.dialog_resetpassword);
 
         auth = FirebaseAuth.getInstance();
 
@@ -47,19 +47,21 @@ public class ResetPasswordDialog extends Dialog {
         reset_BTN_reset = findViewById(R.id.reset_BTN_reset);
     }
 
+    // Reset password listener
     View.OnClickListener resetListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             String email = reset_EDT_email.getText().toString().trim();
 
             if (TextUtils.isEmpty(email)) {
-                reset_EDT_email.setError(getContext().getResources().getString(R.string.error_wrong_email));
+                reset_EDT_email.setError(getContext().getResources().getString(R.string.reset_error_wrong_email));
                 return;
             }
             sendPasswordResetEmail(email);
         }
     };
 
+    // Sending the password reset email
     private void sendPasswordResetEmail(String email) {
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

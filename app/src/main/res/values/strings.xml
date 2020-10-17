@@ -1,57 +1,76 @@
 <resources>
+
+    <!-- ************************** GENERAL ************************** -->
+
     <string name="app_name">Recipe Suggester</string>
-    <string name="action_sign_in_short">Register</string>
-    <string name="email">Email</string>
-    <string name="minimum_password">Password too short, 6 characters minimum!</string>
-    <string name="auth_failed">Authentication failed, check your email and password!</string>
-    <string name="change_email">Change Email</string>
-    <string name="change_password">Change Password</string>
-    <string name="remove_user">Remove user</string>
-    <string name="new_pass">New Password</string>
-    <string name="title_activity_profile">Firebase</string>
-    <string name="title_activity_login">Sign in</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Full Name</string>
-    <string name="btn_login">LOGIN</string>
-    <string name="btn_link_to_register">Not a member? Get registered now!</string>
-    <string name="btn_link_to_login">Already registered? Login!</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
-    <string name="btn_forgot_password">Forgot your password?</string>
-    <string name="btn_reset_password">Reset Password</string>
-    <string name="btn_back"><![CDATA[<< Back]]></string>
-    <string name="hint_new_email">New Email</string>
-    <string name="btn_change">Change</string>
-    <string name="btn_send">Send</string>
-    <string name="btn_remove">Remove</string>
-    <string name="btn_sign_out">Sign Out</string>
-    <string name="lbl_forgot_password">Forgot password?</string>
-    <string name="error_wrong_email">Email does not exist!</string>
     <string name="enter_email">Enter your email address!</string>
     <string name="enter_password">Enter your password!</string>
-    <string name="enter_name">Please enter your name!</string>
-    <string name="successful_registration">Registration done!</string>
-    <string name="reset">Reset</string>
-    <string name="reset_successful">We have sent you instructions to reset your password!</string>
-    <string name="reset_unsuccessful">Failed to send reset email!</string>
-    <string name="welcome">Welcome!</string>
-    <string name="searchbar_title">Add Ingredients</string>
     <string name="my_search">My Search</string>
-    <string name="no_items">No items</string>
-    <string name="ingredients_list">Ingredients List</string>
+
+    <!-- ************************** PERMISSIONS ************************** -->
+
+    <string name="permissions_ok">OK</string>
+    <string name="permissions_cancel">Cancel</string>
+    <string name="permissions_rationale">The app needs access to your storage so you may change your profile picture.</string>
+
+    <!-- ************************** DRAWER ************************** -->
+
+    <string name="drawer_change_picture">Change Picture</string>
+    <string name="drawer_changed_picture">Picture successfully changed!</string>
+    <string name="drawer_back">Back</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_logout">Logout</string>
+    <string name="drawer_profile">Profile</string>
+    <string name="drawer_general">General</string>
 
     <!-- ************************** MENUS ************************** -->
 
-    <string name="home">Home</string>
-    <string name="logout">Logout</string>
-    <string name="made_by">Made by Dmitry Ovchinikov</string>
-    <string name="search_recipe">Search Recipes</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_ingredients_list">Ingredients List</string>
+    <string name="menu_search_recipe">Search Recipes</string>
+    <string name="menu_your_recipes">Your Recipes</string>
 
-    <!-- ************************** RECIPES FRAGMENT ************************** -->
+    <!-- ************************** REGISTER ACTIVITY ************************** -->
+
+    <string name="register_register">Register</string>
+    <string name="register_email_hint">Email</string>
+    <string name="register_minimum_password">Password too short, 6 characters minimum!</string>
+    <string name="register_auth_failed">Authentication failed, check your email and password!</string>
+    <string name="register_btn_link_to_login">Already registered? Login!</string>
+    <string name="register_enter_name">Please enter your name!</string>
+    <string name="register_successful_registration">Registration done! Entering…</string>
+
+    <!-- ************************** LOGIN ACTIVITY ************************** -->
+
+    <string name="login_btn_login">LOGIN</string>
+    <string name="login_btn_link_to_register">Not a member? Get registered now!</string>
+    <string name="login_btn_forgot_password">Forgot your password?</string>
+    <string name="login_welcome">Welcome!</string>
+
+    <!-- ************************** RESET PASSWORD DIALOG ************************** -->
+
+    <string name="reset_btn_reset_password">Reset Password</string>
+    <string name="reset_error_wrong_email">Email does not exist!</string>
+    <string name="reset_reset">Reset</string>
+    <string name="reset_successful">We have sent you instructions to reset your password!</string>
+    <string name="reset_unsuccessful">Failed to send reset email!</string>
+
+    <!-- ************************** RECIPES LIST FRAGMENT ************************** -->
+
     <string name="recipes_back">Back</string>
     <string name="recipes_next">Next</string>
+    <string name="recipes_search">Search</string>
+    <string name="recipes_add">Add</string>
+    <string name="recipes_no_recipes">No Recipes</string>
+    <string name="recipes_clear">Clear list</string>
 
+    <!-- ************************** SEARCH RECIPES FRAGMENT ************************** -->
+
+    <string name="search_no_ingredients">No Ingredients</string>
+    <string name="search_bar_title">Add Ingredients</string>
 
 </resources>

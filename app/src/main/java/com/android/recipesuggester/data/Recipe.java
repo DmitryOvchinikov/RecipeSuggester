@@ -4,16 +4,20 @@ public class Recipe {
     private int ID;
     private String title;
     private String imageURL;
-    private String summary;
+    private String missing;
+    private String used;
+    private String steps;
 
     public Recipe() {
     }
 
-    public Recipe(int ID, String title, String imageURL, String recipeText) {
+    public Recipe(int ID, String title, String imageURL, String missing, String used, String steps) {
         this.ID = ID;
         this.title = title;
         this.imageURL = imageURL;
-        this.summary = recipeText;
+        this.missing = missing;
+        this.used = used;
+        this.steps = steps;
     }
 
     public int getID() {
@@ -40,12 +44,28 @@ public class Recipe {
         this.imageURL = imageURL;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getMissing() {
+        return missing;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setMissing(String missing) {
+        this.missing = missing;
+    }
+
+    public String getUsed() {
+        return used;
+    }
+
+    public void setUsed(String used) {
+        this.used = used;
+    }
+
+    public String getSteps() {
+        return steps;
+    }
+
+    public void setSteps(String steps) {
+        this.steps = steps;
     }
 
     @Override
@@ -54,7 +74,7 @@ public class Recipe {
                 "ID=" + ID +
                 ", title='" + title + '\'' +
                 ", imageURL='" + imageURL + '\'' +
-                ", summary='" + summary + '\'' +
+                ", missing='" + missing + '\'' +
                 '}';
     }
 }

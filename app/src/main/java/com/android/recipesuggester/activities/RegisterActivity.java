@@ -1,7 +1,9 @@
 package com.android.recipesuggester.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +26,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-//TODO: add name to register
-
 public class RegisterActivity extends AppCompatActivity {
+
+    private final static String DEFAULT_IMAGE_URL = "https://i7.pngguru.com/preview/177/551/742/user-interface-design-computer-icons-default-stephen-salazar-photography-thumbnail.jpg";
 
     private ImageView register_IMG_topBG;
     private ImageView register_IMG_botBG;
@@ -81,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
         register_BAR_progress = findViewById(R.id.register_BAR_progress);
     }
 
+    // Go back to the login screen listener
     private View.OnClickListener loginscreenListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -89,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
+    // Registering the user listener
     private View.OnClickListener registerListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -107,11 +111,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if (TextUtils.isEmpty(name)) {
-                MyToast.getInstance().showToast(R.string.enter_name, getApplicationContext());
+                MyToast.getInstance().showToast(R.string.register_enter_name, getApplicationContext());
             }
 
             if (password.length() < 6) {
-                MyToast.getInstance().showToast(R.string.minimum_password, getApplicationContext());
+                MyToast.getInstance().showToast(R.string.register_minimum_password, getApplicationContext());
                 return;
             }
 
@@ -120,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
+    // Creating the user inside the firebase auth
     private void createUser(String email, String password, final String name) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -128,9 +133,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Alert the user if he failed to register
                 if (!task.isSuccessful()) {
-                    MyToast.getInstance().showToast(R.string.auth_failed, getApplicationContext());
+                    MyToast.getInstance().showToast(R.string.register_auth_failed, getApplicationContext());
                 } else {
-                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).setPhotoUri(Uri.parse(DEFAULT_IMAGE_URL)).build();
                     auth.getCurrentUser().updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -139,15 +144,28 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    MyToast.getInstance().showToast(R.string.successful_registration, getApplicationContext());
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    finish();
+
+                    MyToast.getInstance().showToast(R.string.register_successful_registration, getApplicationContext());
+
+                    //Force a 1 second wait so the user may see the toast
+                    Handler handler = new Handler();
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                    };
+
+                    handler.postDelayed(runnable,1000);
+                    handler.removeCallbacksAndMessages(runnable);
                 }
             }
         });
 
     }
 
+    // Cancelling the toast onPause
     @Override
     protected void onPause() {
         super.onPause();

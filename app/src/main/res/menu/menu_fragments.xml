@@ -4,13 +4,17 @@
     <item
         android:id="@+id/fragments_home"
         android:icon="@drawable/home_icon"
-        android:title="@string/home" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/fragments_list"
         android:icon="@drawable/list_icon"
-        android:title="@string/ingredients_list" />
+        android:title="@string/menu_ingredients_list" />
     <item
-        android:id="@+id/fragments_recipe"
-        android:icon="@drawable/recipe_icon"
-        android:title="@string/search_recipe" />
+        android:id="@+id/fragments_search"
+        android:icon="@drawable/search_icon"
+        android:title="@string/menu_search_recipe" />
+    <item
+        android:id="@+id/fragments_recipes"
+        android:icon="@drawable/recipes_icon"
+        android:title="@string/menu_your_recipes" />
 </menu>
