@@ -12,6 +12,7 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        tools:ignore="ContentDescription"
         />
 
     <TextView

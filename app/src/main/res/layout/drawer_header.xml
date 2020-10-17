@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/menu_IMG_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
+        tools:ignore="ContentDescription"
         />
 
     <LinearLayout
@@ -23,6 +25,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:scaleType="fitXY"
+            tools:ignore="ContentDescription"
             />
 
         <TextView

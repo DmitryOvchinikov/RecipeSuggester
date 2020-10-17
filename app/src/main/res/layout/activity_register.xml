@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <ImageView
@@ -11,6 +11,7 @@
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
+        tools:ignore="ContentDescription"
         />
 
     <ImageView
@@ -19,6 +20,7 @@
         android:layout_height="300dp"
         android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
+        tools:ignore="ContentDescription"
         />
 
     <ProgressBar
@@ -44,6 +46,7 @@
             android:layout_height="@dimen/logo_w_h"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
+            tools:ignore="ContentDescription"
          />
 
         <com.google.android.material.textfield.TextInputLayout
