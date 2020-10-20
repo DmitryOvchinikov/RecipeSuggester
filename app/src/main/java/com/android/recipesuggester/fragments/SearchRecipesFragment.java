@@ -63,7 +63,6 @@ public class SearchRecipesFragment extends Fragment {
     private User user;
     private Recipe[] recipes;
     private int currentRecipePosition;
-    private String currentSummaryString;
 
     //ANIMATIONS
     private LottieAnimationView search_ANIM_animation;
