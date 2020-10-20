@@ -43,7 +43,7 @@ public class SearchRecipesFragment extends Fragment {
     //FINAL STRINGS
     private final static String FIND_BY_INGREDIENTS_GET = "https://api.spoonacular.com/recipes/findByIngredients";
     private final static String GET_ANALYZED_RECIPE_INFO = "https://api.spoonacular.com/recipes/";
-    private final static String API_KEY = "";
+    private final static String API_KEY = "?apiKey=841a45035b8f4ada971513a952601c6b";
 
     //IMGS
     private ImageView search_IMG_recipe;
